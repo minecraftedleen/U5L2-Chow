@@ -1,6 +1,8 @@
 /* === Imports === */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-
+import { getAuth } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 /* === Firebase Setup === */
 const firebaseConfig = {
@@ -14,7 +16,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
+console.log(app.options.projectId)
+const auth = getAuth(app)
+console.log(auth)
 /* === UI === */
 
 /* == UI - Elements == */
@@ -55,6 +59,18 @@ function authSignInWithEmail() {
 
 function authCreateAccountWithEmail() {
     console.log("Sign up with email and password")
+    const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    const uid = user.uid;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
 }
 
 /* == Functions - UI Functions == */
